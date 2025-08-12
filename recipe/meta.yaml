@@ -35,8 +35,6 @@ requirements:
     - fsspec
     - python-libarchive-c
     - setuptools
-    - libarchive-c
-    - ruamel_yaml
 
 test:
   requires:
