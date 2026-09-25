@@ -1,18 +1,19 @@
 {% set name = "conda-project" %}
-{% set version = "0.5.4" %}
+{% set version = "0.4.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 787474eb84547cacf51b854bfc5c5fe079f38c77a4e24f33432fbce2b5cf0bd5
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 3a370742ebb1df6927caf5ba97b2ab76a83ebb3116b9d2f3350f3bd1ebae2c1e
 
 build:
-  skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
   number: 0
+  noarch: python
+  skip: True  # [not linux64]
   entry_points:
     - conda-project = conda_project.cli.main:main
 
@@ -22,10 +23,12 @@ requirements:
     - pip
     - hatchling
     - hatch-vcs >=0.3
+    - setuptools <82.0.0
     - setuptools-scm >=7.1
+    - python-libarchive-c
   run:
     - python
-    - conda-lock >=2.5.6
+    - conda-lock >=2.5.6,>=3.0,>=4.0
     - lockfile
     - pexpect
     - ruamel.yaml
@@ -34,7 +37,7 @@ requirements:
     - python-dotenv
     - fsspec
     - python-libarchive-c
-    - setuptools
+    - setuptools <82.0.0
 
 test:
   requires:
@@ -60,6 +63,10 @@ about:
   dev_url: https://github.com/conda-incubator/conda-project
 
 extra:
+  skip-lints:
+    - missing_source_tracking
+    - avoid_noarch
+    - python_build_tools_in_host
   recipe-maintainers:
     - AlbertDeFusco
     - mattkram
