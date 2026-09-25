@@ -63,9 +63,10 @@ about:
   dev_url: https://github.com/conda-incubator/conda-project
 
 extra:
+  skip-lints:
+    - missing_source_tracking
+    - avoid_noarch
+    - python_build_tools_in_host
   recipe-maintainers:
     - AlbertDeFusco
     - mattkram
-  skip_lints:
-    - missing_source_tracking
-    - avoid_noarc
